@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jobmanager
+spec:
+  type: ClusterIP
+  ports:
+  - name: rpc
+    port: 6123
+  - name: blob
+    port: 6124
+  - name: ui
+    port: 7081
+    targetPort: 8081
+  selector:
+    app: flink
+    component: jobmanager
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: taskmanager
+spec:
+  type: ClusterIP
+  ports:
+  - name: rpc
+    port: 6122
+  selector:
+    app: flink
+    component: taskmanager
