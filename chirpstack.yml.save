@@ -1,0 +1,75 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: live-demo       
+  labels:
+    app: chirpstack    
+spec:
+  selector:
+    matchLabels:
+      app: chirpstack
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: chirpstack
+    spec: 
+      containers:
+
+      - name: chirpstack-geolocation-server
+        image: prrsjunior/chirpstack-geolocation-server
+        env:
+        - name: GEO_SERVER__BACKEND__NAME
+          value: collos
+        ports:
+        - containerPort: 8005
+
+      - name: chirpstack-network-server
+        image: prrsjunior/chirpstack-network-server
+        env:
+        - name: POSTGRESQL__DSN
+          value: postgres://chirpstack_ns:chirpstack_ns@postgresql/chirpstack_ns?sslmode=disable
+        - name: REDIS__URL
+          value: redis://redis:6379
+        - name: NETWORK_SERVER__BAND__NAME
+          value: EU_863_870
+        - name: NETWORK_SERVER__GATEWAY__BACKEND__MQTT__SERVER
+          value: tcp://mosquitto:1883
+        - name: JOIN_SERVER__DEFAULT__SERVER
+          value: http://192.168.0.175:8009
+        - name: GEOLOCATION_SERVER__SERVER
+          value: chirpstack:8005
+
+        ports:
+        - containerPort: 8000
+
+      - name: chirpstack-application-server
+        image: prrsjunior/chirpstack-application-server
+        env:
+        - name: POSTGRESQL__DSN
+          value: postgres://chirpstack_as:chirpstack_as@postgresql/chirpstack_as?sslmode=disable
+        - name: REDIS__URL
+          value: redis://redis:6379
+        - name: APPLICATION_SERVER__INTEGRATION__MQTT__SERVER
+          value: tcp://mosquitto:1883
+        - name: APPLICATION_SERVER__API__PUBLIC_HOST
+          value: localhost:8001
+        - name: APPLICATION_SERVER__EXTERNAL_API__JWT_SECRET
+          value: verysecret
+        - name: METRICS__METRICS__PROMETHEUS__BIND
+          value: 192.168.0.175:9095
+
+        ports:
+        - containerPort: 8080
+        - containerPort: 8001
+        - containerPort: 8003
+        - containerPort: 9095
+
+      - name: chirpstack-gateway-bridge
+        image: prrsjunior/chirpstack-gateway-bridge
+        env:
+        - name: INTEGRATION__MQTT__AUTH__GENERIC__SERVERS
+          value: tcp://mosquitto:1883
+        ports:
+        - containerPort: 1700

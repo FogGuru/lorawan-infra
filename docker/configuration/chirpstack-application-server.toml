@@ -1,0 +1,70 @@
+# See https://www.chirpstack.io/application-server/install/config/ for a full
+# configuration example and documentation.
+
+[postgresql]
+dsn="postgres://chirpstack_as:chirpstack_as@postgresql/chirpstack_as?sslmode=disable"
+
+[redis]
+url="redis://redis:6379"
+
+[application_server.integration.mqtt]
+server="tcp://mosquitto:1883"
+
+[application_server.api]
+public_host="192.168.0.175:8001"
+
+[application_server.external_api]
+bind="0.0.0.0:8080"
+jwt_secret="verysecret"
+
+[metrics]
+  # Metrics stored in Prometheus.
+  #
+  # These metrics expose information about the state of the ChirpStack Network Server
+  # instance.
+  [metrics.prometheus]
+  # Enable Prometheus metrics endpoint.
+  endpoint_enabled=true
+
+  # The ip:port to bind the Prometheus metrics server to for serving the
+  # metrics endpoint.
+  bind="0.0.0.0:9096"
+
+  # API timing histogram.
+  #
+  # By setting this to true, the API request timing histogram will be enabled.
+  # See also: https://github.com/grpc-ecosystem/go-grpc-prometheus#histograms
+  api_timing_histogram=false
+
+
+  # Monitoring settings.
+  #
+  # Note that this replaces the metrics.prometheus configuration. If a
+  # metrics.prometheus if found in the configuration then it will fall back
+  # to that and the monitoring section is ignored.
+  [monitoring]
+
+  # IP:port to bind the monitoring endpoint to.
+  #
+  # When left blank, the monitoring endpoint will be disabled.
+  bind="0.0.0.0:9095"
+
+  # Prometheus metrics endpoint.
+  #
+  # When set to true, Prometheus metrics will be served at '/metrics'.
+  prometheus_endpoint=true
+
+  # Prometheus API timing histogram.
+  #
+  # By setting this to true, the API request timing histogram will be enabled.
+  # See also: https://github.com/grpc-ecosystem/go-grpc-prometheus#histograms
+  prometheus_api_timing_histogram=false
+
+  # Health check endpoint.
+  #
+  # When set to true, the healthcheck endpoint will be served at '/health'.
+  # When requesting, this endpoint will perform the following actions to
+  # determine the health of this service:
+  #   * Ping PostgreSQL database
+  #   * Ping Redis database
+  healthcheck_endpoint=true

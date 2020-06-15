@@ -1,0 +1,151 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: chirpstack
+  labels:
+    app: chirpstack
+spec:
+  type: NodePort
+  ports:
+   - port: 8080
+     targetPort: 8080
+     name: chirpstack-application-server
+   - port: 8005
+     targetPort: 8005
+     name: chirpstack-geolocation-server
+   - port: 8000
+     targetPort: 8000
+     name: chirpstack-network-server
+   - port: 8001
+     targetPort: 8001
+     name: chirpstack-network-server-api
+   - port: 8003
+     targetPort: 8003
+     name: chirpstack-join-server
+   - port: 1700
+     targetPort: 1700
+     name: chirpstack-gateway-bridge
+   - port: 9095
+     targetPort: 9095
+     name: chirpstack-application-prometheus
+   - port: 9096
+     targetPort: 9096
+     name: chirpstack-network-prometheus
+   - port: 9097
+     targetPort: 9097
+     name: chirpstack-gateway-prometheus
+  selector:
+   app: chirpstack
+  externalIPs: 
+  #Expose here ur external IP 
+   - 192.168.0.175
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresql
+  labels:
+    app: postgresql
+spec:
+  type: NodePort
+#  clusterIP: None
+  ports:
+   - port: 5432
+#     protocol: UDP
+     targetPort: 5432
+  selector:
+   app: postgresql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mosquitto
+  labels:
+    app: mosquitto
+spec:
+  type: NodePort
+#  clusterIP: None
+  ports:
+   - port: 1883
+#     protocol: UDP
+     targetPort: 1883
+  selector:
+   app: mosquitto
+  externalIPs:
+  #Expose here ur external IP 
+   - 192.168.0.175
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  labels:
+    app: redis
+spec:
+  type: NodePort
+#  clusterIP: None
+  ports:
+   - port: 6379
+#     protocol: UDP
+     targetPort: 6379
+  selector:
+   app: redis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodered
+  labels:
+    app: nodered
+spec:
+  type: NodePort
+#  clusterIP: None
+  ports:
+   - port: 1880
+#     protocol: UDP
+     targetPort: 1880
+  selector:
+   app: nodered
+  externalIPs:
+  #Expose here ur external IP 
+   - 192.168.0.175
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: simulator
+  labels:
+    app: simulator
+spec:
+  type: NodePort
+#  clusterIP: None
+  ports:
+   - port: 9099
+#     protocol: UDP
+     targetPort: 9099
+  selector:
+   app: simulator
+  externalIPs:
+  #Expose here ur external IP 
+   - 192.168.0.175
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy
+  labels:
+    app: proxy
+spec:
+  type: NodePort
+#  clusterIP: None
+  ports:
+   - port: 8009
+#     protocol: UDP
+     targetPort: 8009
+  selector:
+   app: proxy
+  externalIPs:
+  #Expose here ur external IP 
+   - 192.168.0.175
+
+

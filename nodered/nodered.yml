@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodered
+  labels:
+    app: nodered
+spec:
+  selector:
+    matchLabels:
+      app: nodered
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nodered
+    spec:
+      containers:
+      - name: nodered
+        image: nodered/node-red:1.0.5-10-arm32v7
+        ports:
+          - containerPort: 1880

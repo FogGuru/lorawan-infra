@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+
+kind: Deployment
+metadata:
+  name: proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proxy
+  template:
+    metadata:
+      labels:
+        app: proxy
+    spec:
+      containers:
+      - name: proxy
+        image: prrsjunior/fogguru-proxy-app
+#        command: ["python -m join_proxy"]
+        resources:
+          limits:
+            cpu: 0.5
+            memory: 500Mi
+        ports:
+        - containerPort: 8009
+

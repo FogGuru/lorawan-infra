@@ -1,0 +1,78 @@
+# See https://www.chirpstack.io/network-server/install/config/ for a full
+# configuration example and documentation.
+#
+# This file is for the EU868 band. See the examples/ folder for more
+# configuration examples.
+
+[postgresql]
+dsn="postgres://chirpstack_ns:chirpstack_ns@postgresql/chirpstack_ns?sslmode=disable"
+
+[redis]
+url="redis://redis:6379"
+
+[network_server]
+net_id="000000"
+
+[network_server.band]
+name="EU_863_870"
+
+[network_server.network_settings]
+
+  [[network_server.network_settings.extra_channels]]
+  frequency=867100000
+  min_dr=0
+  max_dr=5
+
+  [[network_server.network_settings.extra_channels]]
+  frequency=867300000
+  min_dr=0
+  max_dr=5
+
+  [[network_server.network_settings.extra_channels]]
+  frequency=867500000
+  min_dr=0
+  max_dr=5
+
+  [[network_server.network_settings.extra_channels]]
+  frequency=867700000
+  min_dr=0
+  max_dr=5
+
+  [[network_server.network_settings.extra_channels]]
+  frequency=867900000
+  min_dr=0
+  max_dr=5
+
+[network_server.gateway.backend.mqtt]
+server="tcp://mosquitto:1883"
+
+[join_server.default]
+server="http://192.168.0.175:8009"
+
+[geolocation_server]
+server="chirpstack:8005"
+
+[monitoring]
+  # IP:port to bind the monitoring endpoint to.  #
+  # When left blank, the monitoring endpoint will be disabled.
+bind="0.0.0.0:9096"
+
+  # Prometheus metrics endpoint.
+  #
+  # When set true, Prometheus metrics will be served at '/metrics'.
+prometheus_endpoint=true
+
+  # Prometheus API timing histogram.
+  #
+  # By setting this to true, the API request timing histogram will be enabled.
+  # See also: https://github.com/grpc-ecosystem/go-grpc-prometheus#histograms
+prometheus_api_timing_histogram=false
+
+  # Health check endpoint.
+  #
+  # When set to true, the healthcheck endpoint will be served at '/health'.
+  # When requesting, this endpoint will perform the following actions to
+  # determine the health of this service:
+  #   * Ping PostgreSQL database
+  #   * Ping Redis database
+healthcheck_endpoint=true
