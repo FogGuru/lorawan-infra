@@ -19,22 +19,22 @@ system_initialize() {
 
   echo "Applying chirpstack configurations into Postgresql"
   kubectl exec -i service/postgresql  -- psql -v ON_ERROR_STOP=1 postgresdb --username postgresadmin <<-EOSQL
-      create role chirpstack_ns with login password 'chirpstack_ns';
-      create database chirpstack_ns with owner chirpstack_ns;
-  EOSQL
+    create role chirpstack_ns with login password 'chirpstack_ns';
+    create database chirpstack_ns with owner chirpstack_ns;
+EOSQL
 
   kubectl exec -i service/postgresql -- psql -v ON_ERROR_STOP=1 postgresdb --username postgresadmin <<-EOSQL
-      create role chirpstack_as with login password 'chirpstack_as';
-      create database chirpstack_as with owner chirpstack_as;
-  EOSQL
+    create role chirpstack_as with login password 'chirpstack_as';
+    create database chirpstack_as with owner chirpstack_as;
+EOSQL
 
   kubectl exec -i service/postgresql -- psql -v ON_ERROR_STOP=1 --username postgresadmin --dbname="chirpstack_as" <<-EOSQL
-      create extension pg_trgm;
-  EOSQL
+    create extension pg_trgm;
+EOSQL
 
   kubectl exec -i service/postgresql -- psql -v ON_ERROR_STOP=1 --username postgresadmin --dbname="chirpstack_as" <<-EOSQL
      create extension hstore;
-  EOSQL
+EOSQL
 
   echo "Loading configuration files of chirpstack"
   kubectl create configmap example --from-file=docker/configuration
@@ -59,6 +59,8 @@ if [ $# -eq 1 ]; then
     system_initialize
   elif [ "$1" == "delete" ]; then
     system_delete
+  else
+    echo "$ERROR_MSG"
   fi
 else
   echo "$ERROR_MSG"
