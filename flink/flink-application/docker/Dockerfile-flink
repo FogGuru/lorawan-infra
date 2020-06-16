@@ -1,0 +1,12 @@
+FROM openjdk:8-jre-alpine
+
+RUN apk add --no-cache bash snappy libc6-compat wget tar && \
+wget http://apache.mirror.iphh.net/flink/flink-1.9.3/flink-1.9.3-bin-scala_2.11.tgz && \
+mkdir -p /flink && \
+tar xzf flink-1.9.3-bin-scala_2.11.tgz -C /flink
+
+ENV FLINK_HOME /flink
+COPY flink-conf.yaml $FLINK_HOME/conf/flink-conf.yaml
+COPY taskmanager.sh $FLINK_HOME/bin/taskmanager.sh
+
+ENV PATH $PATH:$FLINK_HOME/bin
