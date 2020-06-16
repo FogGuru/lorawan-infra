@@ -32,7 +32,7 @@ To remove use:
 
 ### Kubernetes
 
-If you want to setup Kubernetes in a raspberrypi follow this [quick guide](kuberetes/install.md)
+To setup Kubernetes: [quick guide](kubernetes/install.md)
 
 ### Flink deployment
 
