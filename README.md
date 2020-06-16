@@ -4,11 +4,11 @@ Repository containing the required files to deploy on Kubernetes a LoraWAN ready
 
 It uses chirpstack as our LoRaWAN server running in arm architecture.
 
--- [Chirpstack](https://www.chirpstack.io/)
--- Postgres
--- Redis
--- Mosquitto
--- Flink
+- [Chirpstack](https://www.chirpstack.io/)
+- Postgres
+- Redis
+- Mosquitto
+- Flink
 
 ## Images
 
@@ -29,6 +29,21 @@ To remove use:
 ```
  $ sh start_infra.sh delete
 ```
+
+# Flink deployment
+
+Deployment: 
+
+```
+ $ kubectl apply -f flink/.
+```
+
+Remove deployment:
+
+```
+ $ kubectl delete -f .
+```
+
 ## Configuration
 
 # Service
