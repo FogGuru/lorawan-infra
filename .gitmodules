@@ -1,0 +1,19 @@
+[submodule "simulator/scripts/chirpstack/simulator/chirpstack-simulator"]
+	path = simulator/chirpstack-simulator
+	url = https://github.com/brocaar/chirpstack-simulator
+[submodule "monitor/cadvisor"]
+	path = monitor/cadvisor
+	url = https://github.com/google/cadvisor
+[submodule "docker/chirpstack-application-server"]
+	path = docker/chirpstack-application-server
+	url = https://github.com/brocaar/chirpstack-application-server
+[submodule "docker/chirpstack-network-server"]
+        path = docker/chirpstack-network-server
+        url = https://github.com/brocaar/chirpstack-network-server
+[submodule "docker/chirpstack-geolocation-server"]
+        path = docker/chirpstack-geolocation-server
+        url = https://github.com/brocaar/chirpstack-geolocation-server
+[submodule "docker/chirpstack-gateway-bridge"]
+        path = docker/chirpstack-gateway-bridge
+        url = https://github.com/brocaar/chirpstack-gateway-bridge
+
