@@ -45,7 +45,7 @@ Deployment:
 Remove deployment:
 
 ```
- $ kubectl delete -f .
+ $ kubectl delete -f flink/.
 ```
 
 ## Configuration
